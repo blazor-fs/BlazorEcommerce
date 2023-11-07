@@ -35,7 +35,7 @@ public class ProductsController : ControllerBase
     };
 
     [HttpGet]
-    public async Task<IActionResult> GetProducts()
+    public async Task<ActionResult<List<Product>>> GetProducts()
     {
         return Ok(_products);
     }
