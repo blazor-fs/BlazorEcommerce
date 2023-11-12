@@ -21,4 +21,21 @@ public class ProductService : IProductService
 
         return response;
     }
+
+    public async Task<ServiceResponse<Product>> GetProductByIdAsync(int id)
+    {
+        var response = new ServiceResponse<Product>();
+        Product product = await _context.Products.FindAsync(id);
+        if (product == null)
+        {
+            response.Success = false;
+            response.Message = "Sorry, but this product does not exist.";
+        }
+        else
+        {
+            response.Data = product;
+        }
+
+        return response;
+    }
 }
