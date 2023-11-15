@@ -30,10 +30,18 @@ else
     protected override async Task OnParametersSetAsync()
     {
         message = "Loading product...";
-        var result = await ProductService.GetProduct(Id);
-        if (!result.Success)
-            message = result.Message;
-        else
-            product = result.Data;
+        try
+        {
+            var result = await ProductService.GetProduct(Id);
+            if (!result.Success)
+                message = result.Message;
+            else
+                product = result.Data;
+        }
+        catch (HttpRequestException ex)
+        {
+            if (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+                message = "Sorry, but this product does not exist.";
+        }
     }
 }

@@ -25,6 +25,9 @@ public class ProductsController : ControllerBase
     public async Task<ActionResult<ServiceResponse<Product>>> GetProduct(int id)
     {
         var response = await _productService.GetProductByIdAsync(id);
+        if (response.Data == null)
+            return NotFound();
+
         return Ok(response);
     }
 }
